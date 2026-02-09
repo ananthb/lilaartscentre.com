@@ -1,17 +1,22 @@
 <script src="https://unpkg.com/htmx.org@2.0.4"></script>
 <style>
-.contact-form {
+/* Contact form styles */
+#contact-form {
   max-width: 500px;
   margin: 2rem 0;
 }
-.contact-form label {
+#contact-form form {
+  display: flex;
+  flex-direction: column;
+}
+#contact-form label {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
 }
-.contact-form input,
-.contact-form textarea,
-.contact-form select {
+#contact-form input,
+#contact-form textarea,
+#contact-form select {
   width: 100%;
   padding: 0.75rem;
   margin-bottom: 1rem;
@@ -19,12 +24,14 @@
   border-radius: 4px;
   font-size: 1rem;
   font-family: inherit;
+  box-sizing: border-box;
 }
-.contact-form textarea {
+#contact-form textarea {
   min-height: 150px;
   resize: vertical;
 }
-.contact-form button {
+#contact-form button,
+#contact-form input[type="submit"] {
   background: #333;
   color: #fff;
   padding: 0.75rem 2rem;
@@ -33,20 +40,63 @@
   font-size: 1rem;
   cursor: pointer;
   transition: background 0.2s;
+  align-self: flex-start;
 }
-.contact-form button:hover {
+#contact-form button:hover,
+#contact-form input[type="submit"]:hover {
   background: #555;
 }
-.contact-form button:disabled {
+#contact-form button:disabled,
+#contact-form input[type="submit"]:disabled {
   background: #999;
   cursor: not-allowed;
 }
-#form-response {
-  padding: 1rem;
-  margin-top: 1rem;
-  border-radius: 4px;
+
+/* Event calendar styles */
+#event-calendar {
+  margin: 2rem 0;
 }
-#form-response:empty {
-  display: none;
+
+/* Venue booking styles */
+#venue-booking {
+  max-width: 600px;
+  margin: 2rem 0;
+}
+#venue-booking form {
+  display: flex;
+  flex-direction: column;
+}
+#venue-booking label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+#venue-booking input,
+#venue-booking textarea,
+#venue-booking select {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+#venue-booking button,
+#venue-booking input[type="submit"] {
+  background: #333;
+  color: #fff;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  align-self: flex-start;
+}
+#venue-booking button:hover,
+#venue-booking input[type="submit"]:hover {
+  background: #555;
 }
 </style>

@@ -1,33 +1,14 @@
 ---
 title: "Contact"
-weight: 4
+weight: 5
 header_menu: true
 ---
 
 We'd love to hear from you, whether you're interested in classes, venue hire, or collaboration.
 
-<form class="contact-form" hx-post="https://form-worker.srv-cf.workers.dev/f/lila-arts-centre/submit" hx-target="#form-response" hx-swap="innerHTML" hx-disabled-elt="button">
-  <label for="name">Name</label>
-  <input type="text" id="name" name="name" required>
-
-  <label for="email">Email</label>
-  <input type="email" id="email" name="email" required>
-
-  <label for="subject">Subject</label>
-  <select id="subject" name="subject" required>
-    <option value="">Select a topic...</option>
-    <option value="classes">Class Enquiry</option>
-    <option value="venue">Venue Booking</option>
-    <option value="collaboration">Collaboration</option>
-    <option value="other">Other</option>
-  </select>
-
-  <label for="message">Message</label>
-  <textarea id="message" name="message" required></textarea>
-
-  <button type="submit">Send Message</button>
-</form>
-<div id="form-response"></div>
+<div id="contact-form" hx-get="https://form-worker.srv-cf.workers.dev/f/lila-arts-centre" hx-trigger="load" hx-swap="innerHTML">
+  Loading form...
+</div>
 
 ----
 

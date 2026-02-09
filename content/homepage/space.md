@@ -1,6 +1,6 @@
 ---
 title: "The Space"
-weight: 3
+weight: 4
 header_menu: true
 ---
 
@@ -20,4 +20,8 @@ A curated collection of books, recordings, and resources on Indian classical art
 
 ----
 
-*Available for venue hire. Contact us for bookings and availability.*
+##### Book the Space
+
+<div id="venue-booking" hx-get="https://calendar-worker.srv-cf.workers.dev/book/lila-arts-centre" hx-trigger="load" hx-swap="innerHTML">
+  Loading booking calendar...
+</div>
