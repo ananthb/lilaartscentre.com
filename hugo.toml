@@ -1,0 +1,63 @@
+baseURL = 'https://lilaartscentre.com/'
+languageCode = 'en-in'
+title = 'Lila Arts Centre'
+
+[module]
+[[module.imports]]
+path = "github.com/zjedi/hugo-scroll"
+
+# One-page website, disable unnecessary page types
+disableKinds = ["section", "taxonomy", "term", "RSS", "robotsTXT"]
+
+enableGitInfo = true
+enableEmoji = true
+
+[params]
+# Favicon
+favicon = "images/favicon.png"
+
+# Open Graph / Social sharing image
+images = ["images/cover.jpg"]
+
+# Site title for Open Graph
+title = "Lila Arts Centre - Dance Studio & Performance Space in Chennai"
+
+# Meta description
+description = "A performance space and dance studio in the heart of Chennai, offering Bharatanatyam classes, workshops, and venue hire."
+
+# Copyright line in footer
+copyright = "© Lila Arts Centre, Chennai"
+
+# Don't hide the theme credit
+hidedesignbyline = false
+
+# Section color alternation
+invertSectionColors = false
+
+# Image processing options
+image_options = "webp q90 lanczos photo"
+
+[params.footer]
+showContactIcons = true
+showFooterLinks = false
+
+[params.meta]
+keywords = "dance studio chennai, bharatanatyam classes, performance space chennai, lila arts centre, t nagar dance, indian classical dance, dance workshops chennai"
+
+[[params.contacts]]
+label = "Instagram"
+value = "@lilaartscentre"
+url = "https://instagram.com/lilaartscentre"
+icon = "fa-brands fa-instagram"
+
+[[params.contacts]]
+label = "Email"
+value = "hello@lilaartscentre.com"
+url = "mailto:hello@lilaartscentre.com"
+icon = "fa fa-envelope"
+
+[[params.contacts]]
+label = "Location"
+value = "T. Nagar, Chennai"
+url = "https://maps.google.com/?q=Lila+Arts+Centre+Chennai"
+icon = "fa fa-location-dot"
