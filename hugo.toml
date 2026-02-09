@@ -12,6 +12,11 @@ disableKinds = ["section", "taxonomy", "term", "RSS", "robotsTXT"]
 enableGitInfo = true
 enableEmoji = true
 
+[markup]
+[markup.goldmark]
+[markup.goldmark.renderer]
+unsafe = true
+
 [params]
 # Favicon
 favicon = "images/favicon.png"
