@@ -6,7 +6,7 @@ header_menu: true
 
 We'd love to hear from you, whether you're interested in classes, venue hire, or collaboration.
 
-<div id="contact-form" hx-get="https://form-worker.srv-cf.workers.dev/f/lila-arts-centre" hx-trigger="load" hx-swap="innerHTML">
+<div id="contact-form" hx-get="https://form-worker.srv-cf.workers.dev/f/lila-arts-centre" hx-trigger="load" hx-select="#form-container" hx-swap="innerHTML">
   Loading form...
 </div>
 
