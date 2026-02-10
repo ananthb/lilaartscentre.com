@@ -22,6 +22,6 @@ A curated collection of books, recordings, and resources on Indian classical art
 
 ##### Book the Space
 
-<div id="venue-booking" hx-get="https://calendar-worker.srv-cf.workers.dev/book/7709def2-8840-414b-83ca-3dbc06862918/neat-newt-8uf" hx-trigger="load" hx-swap="innerHTML">
+<div id="venue-booking" hx-get="https://concierge.kedi.dev/book/ece6a718-90ed-4059-951d-1d30137a4586/smart-bear-mzp" hx-trigger="load" hx-swap="innerHTML">
   Loading booking calendar...
 </div>
