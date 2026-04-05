@@ -6,9 +6,7 @@ header_menu: true
 
 We'd love to hear from you, whether you're interested in classes, venue hire, or collaboration.
 
-<div id="contact-form" hx-get="https://concierge.kedi.dev/f/lila-arts-centre" hx-trigger="load" hx-swap="innerHTML">
-  Loading form...
-</div>
+{{< icon name="envelope" >}} [hello@lilaartscentre.com](mailto:hello@lilaartscentre.com)
 
 ----
 
