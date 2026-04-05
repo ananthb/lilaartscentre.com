@@ -6,6 +6,8 @@ header_menu: true
 
 Lila Arts Centre features a thoughtfully designed performance and practice space equipped for dance, music, theatre, and more.
 
+![Dance studio](/images/studio.jpg)
+
 ##### Performance Hall
 
 An intimate venue perfect for dance recitals, musical concerts, theatre productions, and cultural events. Carefully considered acoustics and lighting provide an ideal setting for performances that demand attention to detail.
@@ -22,6 +24,4 @@ A curated collection of books, recordings, and resources on Indian classical art
 
 ##### Book the Space
 
-<div id="venue-booking" hx-get="https://concierge.kedi.dev/book/ece6a718-90ed-4059-951d-1d30137a4586/smart-bear-mzp" hx-trigger="load" hx-swap="innerHTML">
-  Loading booking calendar...
-</div>
+[Book a visit on Google Calendar](https://calendar.app.google/sgJySjCqsXggaPz67)

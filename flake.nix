@@ -3,31 +3,56 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, ... }:
-    let
-      systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
-      forAllSystems = nixpkgs.lib.genAttrs systems;
-    in
-    {
-      devShells = forAllSystems (system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        {
-          default = pkgs.mkShell {
-            packages = [
-              pkgs.git
-              pkgs.go
-              pkgs.hugo
-            ];
+  outputs = { self, nixpkgs, flake-utils, git-hooks }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
 
-            shellHook = ''
-              echo "lilaartscentre.com dev shell"
-              hugo version
-            '';
+        pre-commit = git-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = {
+            check-merge-conflicts.enable = true;
+            check-toml.enable = true;
+            check-yaml.enable = true;
+            detect-private-keys.enable = true;
+            end-of-file-fixer.enable = true;
+            trim-trailing-whitespace.enable = true;
           };
-        });
+        };
+
+      in
+      {
+        checks = {
+          inherit pre-commit;
+        };
+
+        devShells.default = pkgs.mkShell {
+          name = "lilaartscentre";
+
+          packages = [
+            pkgs.git
+            pkgs.go
+            pkgs.hugo
+            pkgs.wrangler
+          ];
+
+          shellHook = ''
+            ${pre-commit.shellHook}
+          '';
+        };
+      }
+    ) // {
+      garnix = {
+        builds = {
+          exclude = [ "aarch64-darwin" "x86_64-darwin" "aarch64-linux" ];
+        };
+      };
     };
 }
