@@ -17,7 +17,7 @@ DTEND:{{ (.Date.Add (mul 2 3600 | time.Duration "second")).UTC.Format "20060102T
 SUMMARY:{{ .Title }}
 {{ with .Params.summary }}DESCRIPTION:{{ . }}
 {{ end -}}
-LOCATION:{{ $site.Title }}\, 5/6 Thirumalai Pillai Road\, T. Nagar\, Chennai 600017
+LOCATION:{{ with .Params.venue }}{{ . }}{{ else }}{{ $site.Title }}\, 5/6 Thirumalai Pillai Road\, T. Nagar\, Chennai 600017{{ end }}
 URL:{{ .Permalink }}
 END:VEVENT
 {{ end -}}

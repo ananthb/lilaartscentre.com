@@ -111,6 +111,9 @@ collections:
         date_format: yyyy-MM-dd
         time_format: HH:mm
         picker_utc: false
+      # Only when the programme is not on our own stage; left blank the site
+      # uses the centre's own name and address.
+      - { name: venue, label: Venue (if elsewhere), widget: string, required: false }
       - { name: summary, label: One-line summary, widget: string, required: false }
       - name: artists
         label: Artists
