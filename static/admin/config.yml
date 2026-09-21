@@ -1,0 +1,82 @@
+# Sveltia CMS. Served at https://lilaartscentre.com/admin/, signs in through
+# calculon.tech, the forge (which signs in through Vault), and commits to main.
+backend:
+  name: gitea
+  repo: ananthb/lilaartscentre.com
+  branch: main
+  base_url: https://calculon.tech
+  api_root: https://calculon.tech/api/v1
+  # Client id of the public OAuth2 app declared in calculon-tech/platform,
+  # tf/forgejo/sites.tf (output sveltia_app_ids).
+  app_id: 74e01595-8304-4e7c-a7e8-3239aa68f649
+  # Vault is the only door: no personal-access-token sign-in.
+  auth_methods: [oauth]
+
+site_url: https://lilaartscentre.com
+display_url: https://lilaartscentre.com
+
+# hugo-scroll reads images from static/, and front matter refers to them as
+# images/<file> with no leading slash.
+media_folder: static/images
+public_folder: images
+
+# Photos are resized on the way in, so phone originals never reach the repo.
+media_libraries:
+  default:
+    config:
+      max_file_size: 20000000
+      slugify_filename: true
+      transformations:
+        raster_image:
+          format: webp
+          quality: 85
+          width: 1600
+          height: 1600
+
+slug:
+  encoding: ascii
+  clean_accents: true
+
+collections:
+  # One page, so the landing banner is a single file rather than a collection.
+  - name: header
+    label: Header
+    files:
+      - name: header
+        label: Header and banner
+        file: content/_index.md
+        format: yaml-frontmatter
+        fields:
+          - { name: header_image, label: Banner image, widget: image }
+          - { name: header_use_video, label: Use video banner, widget: boolean, required: false, default: false }
+          - { name: header_headline, label: Headline, widget: string }
+          # The theme renders these through goldmark with unsafe HTML on, so
+          # inline tags like <b> are deliberate and must survive editing.
+          - { name: header_subheadline, label: Subheadline, widget: string }
+          - { name: nav_to_top_title, label: "Back-to-top link text", widget: string, required: false }
+          - { name: nav_to_top_weight, label: "Back-to-top position", widget: string, required: false }
+          - { name: body, label: Body, widget: markdown, required: false }
+
+  # Every section of the single page, ordered by weight.
+  - name: sections
+    label: Page sections
+    label_singular: Section
+    folder: content/homepage
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: yaml-frontmatter
+    filter: { field: headless, value: null }
+    sortable_fields:
+      fields: [weight, title]
+      default: { field: weight, direction: ascending }
+    summary: "{{weight}} — {{title}}"
+    fields:
+      # The filter above hides the section's own index.md (headless: true);
+      # Sveltia wants the field declared to filter on it. Hidden: never edited.
+      - { name: headless, widget: hidden, required: false }
+      - { name: title, label: Title, widget: string }
+      # Order down the page. Lower is higher up.
+      - { name: weight, label: Order, widget: number, value_type: int, min: 1 }
+      - { name: header_menu, label: Show in the nav menu, widget: boolean, required: false, default: true }
+      - { name: body, label: Body, widget: markdown }
