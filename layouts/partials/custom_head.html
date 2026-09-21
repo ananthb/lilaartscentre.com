@@ -18,5 +18,135 @@
   --single-page-bg-color: #F5F1EB;
   --footer-color-background: #141618;
   --footer-color: #9A8E7E;
+
+  /* The brand gold reads at 2.14:1 on the cream page background, well under
+     the 4.5:1 WCAG AA needs. This deeper gold keeps the character and lands
+     at 5.52:1, so it is what the events pages use for text and rules. */
+  --event-accent: #7A5C20;
+  --event-rule: #DED6C8;
+  --event-muted: #6A6257;
+}
+
+/* ---- /events/ ------------------------------------------------------- */
+
+.events {
+  list-style: none;
+  margin: 1.5rem 0 2.5rem;
+  padding: 0;
+}
+
+.event + .event { border-top: 1px solid var(--event-rule); }
+
+.event__link {
+  display: grid;
+  grid-template-columns: 3.75rem 1fr auto;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 1rem 0.25rem;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 4px;
+}
+
+.event__link:hover,
+.event__link:focus-visible { background: #EFE9DE; }
+
+.event__date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+  color: var(--event-accent);
+  padding-top: 0.15rem;
+}
+
+.event__date b { font-size: 1.6rem; font-weight: 700; }
+.event__date span { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.event__date small { font-size: 0.7rem; opacity: 0.75; }
+
+.event__body { display: flex; flex-direction: column; gap: 0.2rem; }
+
+.event__title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  /* Underline only the title, so the whole row stays a calm click target. */
+  text-decoration: underline;
+  text-decoration-color: var(--event-rule);
+  text-underline-offset: 3px;
+}
+
+.event__link:hover .event__title { text-decoration-color: var(--event-accent); }
+.event__meta, .event__summary { font-size: 0.9rem; color: var(--event-muted); }
+
+.event__entry {
+  align-self: center;
+  white-space: nowrap;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--event-rule);
+  border-radius: 999px;
+  color: var(--event-muted);
+}
+
+.event__entry--free { border-color: var(--event-accent); color: var(--event-accent); }
+
+.events--past .event__date,
+.events--past .event__title { opacity: 0.78; }
+
+.events-heading {
+  margin-top: 2.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--event-accent);
+}
+
+.events-year {
+  margin: 1.75rem 0 0;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--event-muted);
+}
+
+.events-empty, .events-subscribe { font-size: 0.95rem; color: var(--event-muted); }
+.events-more a { color: var(--event-accent); font-weight: 600; }
+.events-subscribe a, .events-empty a { color: var(--event-accent); }
+
+/* ---- a single programme --------------------------------------------- */
+
+.event-when {
+  margin-bottom: 0.25rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--event-accent);
+}
+
+.event-past-tag {
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--event-muted);
+  font-style: italic;
+}
+
+.event-artists { margin-top: 0; color: var(--event-muted); font-size: 1.05rem; }
+.event-poster { display: block; width: 100%; height: auto; margin: 1.5rem 0; border-radius: 4px; }
+
+.event-footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--event-rule);
+  font-size: 0.95rem;
+}
+
+.event-footer p { margin: 0.35rem 0; }
+.event-entry { font-weight: 600; }
+.event-venue { color: var(--event-muted); }
+.event-cta a { color: var(--event-accent); font-weight: 600; }
+
+@media (max-width: 480px) {
+  .event__link { grid-template-columns: 3rem 1fr; row-gap: 0.5rem; }
+  .event__entry { grid-column: 2; justify-self: start; align-self: start; }
 }
 </style>

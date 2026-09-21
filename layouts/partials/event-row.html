@@ -1,0 +1,25 @@
+{{- /* One programme in a list. Expects an events page as the context. */ -}}
+<li class="event">
+  <a class="event__link" href="{{ .RelPermalink }}">
+    <time class="event__date" datetime="{{ .Date.Format "2006-01-02" }}">
+      <b>{{ .Date.Format "2" }}</b>
+      <span>{{ .Date.Format "Jan" }}</span>
+      <small>{{ .Date.Format "2006" }}</small>
+    </time>
+    <span class="event__body">
+      <span class="event__title">{{ .Title }}</span>
+      <small class="event__meta">
+        {{- $bits := slice -}}
+        {{- if not (.Date.Format "15:04" | eq "00:00") -}}
+          {{- $bits = $bits | append (.Date.Format "3:04 pm") -}}
+        {{- end -}}
+        {{- with .Params.artists }}{{ $bits = $bits | append (delimit . ", ") }}{{ end -}}
+        {{- delimit $bits " · " -}}
+      </small>
+      {{- with .Params.summary }}<small class="event__summary">{{ . }}</small>{{ end }}
+    </span>
+    {{- with .Params.entry }}
+    <span class="event__entry{{ if eq (lower .) "free" }} event__entry--free{{ end }}">{{ . }}</span>
+    {{- end }}
+  </a>
+</li>

@@ -1,0 +1,19 @@
+{{- /* Next few programmes, for the homepage Events section.
+       Usage: {{< upcoming-events limit="3" >}} */ -}}
+{{- $limit := int (.Get "limit" | default 3) -}}
+{{- with .Site.GetPage "/events" -}}
+{{- $events := . -}}
+{{- $upcoming := first $limit (sort (where .RegularPages "Date" "ge" now) "Date") -}}
+{{- with $upcoming }}
+<ul class="events">
+  {{- range . }}{{ partial "event-row.html" . }}{{ end }}
+</ul>
+<p class="events-more"><a href="{{ $events.RelPermalink }}">See all programmes</a></p>
+{{- else }}
+<p class="events-empty">
+  Nothing is scheduled just now — new programmes are announced on
+  <a href="https://instagram.com/lilaartscentre">Instagram</a> first, and appear
+  here as soon as the date is fixed.
+</p>
+{{- end }}
+{{- end -}}

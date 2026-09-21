@@ -4,6 +4,6 @@ weight: 2
 header_menu: true
 ---
 
-Discover upcoming performances, workshops, and cultural events at Lila Arts Centre.
+Performances, recitals and workshops on our stage in T. Nagar.
 
-*Check back soon for upcoming events.*
+{{< upcoming-events limit="3" >}}

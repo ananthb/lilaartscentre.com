@@ -1,0 +1,24 @@
+{{- /* iCalendar feed for /events/. Subscribed to with webcal://, so a phone
+       re-reads it and picks up new programmes. CRLF line endings per RFC 5545. */ -}}
+{{- $site := .Site -}}
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//{{ $site.Title }}//events//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:{{ $site.Title }}
+X-WR-TIMEZONE:Asia/Kolkata
+{{ range .RegularPages -}}
+BEGIN:VEVENT
+UID:{{ .File.UniqueID }}@lilaartscentre.com
+DTSTAMP:{{ now.UTC.Format "20060102T150405Z" }}
+DTSTART:{{ .Date.UTC.Format "20060102T150405Z" }}
+DTEND:{{ (.Date.Add (mul 2 3600 | time.Duration "second")).UTC.Format "20060102T150405Z" }}
+SUMMARY:{{ .Title }}
+{{ with .Params.summary }}DESCRIPTION:{{ . }}
+{{ end -}}
+LOCATION:{{ $site.Title }}\, 5/6 Thirumalai Pillai Road\, T. Nagar\, Chennai 600017
+URL:{{ .Permalink }}
+END:VEVENT
+{{ end -}}
+END:VCALENDAR

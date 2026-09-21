@@ -1,0 +1,47 @@
+{{ define "main" }}
+{{- $now := now -}}
+{{- $upcoming := sort (where .RegularPages "Date" "ge" $now) "Date" -}}
+{{- $past := sort (where .RegularPages "Date" "lt" $now) "Date" "desc" -}}
+<main class="content page-template page-events">
+  <article class="post page">
+    <header class="post-header">
+      <a id="back-to-main-page" href="{{ "/" | relLangURL }}"><i class="fa fa-chevron-left" aria-hidden="true"></i> {{ .Site.Title }}</a>
+    </header>
+    <h1 class="post-title">{{ .Title }}</h1>
+    <section class="post-content">
+      {{ .Content }}
+
+      {{- with $upcoming }}
+      <h2 class="events-heading" id="upcoming">Upcoming</h2>
+      <ul class="events">
+        {{- range . }}{{ partial "event-row.html" . }}{{ end }}
+      </ul>
+      {{- with $.OutputFormats.Get "calendar" }}
+      <p class="events-subscribe">
+        {{- /* webcal:// is not in Go's URL allowlist, so it needs safeURL. */ -}}
+        <a href="{{ .Permalink | safeURL }}"><i class="fa fa-calendar-plus" aria-hidden="true"></i> Subscribe to this calendar</a>
+        — adds our programmes to your phone, and keeps them up to date.
+      </p>
+      {{- end }}
+      {{- else }}
+      <h2 class="events-heading" id="upcoming">Upcoming</h2>
+      <p class="events-empty">
+        Nothing is scheduled just now. New programmes are announced on
+        <a href="https://instagram.com/lilaartscentre">Instagram</a> first, and
+        appear here as soon as the date is fixed.
+      </p>
+      {{- end }}
+
+      {{- with $past }}
+      <h2 class="events-heading" id="past">Past programmes</h2>
+      {{- range .GroupByDate "2006" }}
+      <h3 class="events-year">{{ .Key }}</h3>
+      <ul class="events events--past">
+        {{- range .Pages }}{{ partial "event-row.html" . }}{{ end }}
+      </ul>
+      {{- end }}
+      {{- end }}
+    </section>
+  </article>
+</main>
+{{ end }}

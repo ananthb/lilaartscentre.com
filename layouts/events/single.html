@@ -1,0 +1,48 @@
+{{ define "main" }}
+{{- $past := lt .Date now -}}
+<main class="content page-template page-event">
+  <article class="post page" itemscope itemtype="https://schema.org/Event">
+    <header class="post-header">
+      <a id="back-to-main-page" href="{{ .Parent.RelPermalink | relLangURL }}"><i class="fa fa-chevron-left" aria-hidden="true"></i> {{ .Parent.Title }}</a>
+    </header>
+
+    <p class="event-when{{ if $past }} event-when--past{{ end }}">
+      <time datetime="{{ .Date.Format "2006-01-02T15:04:05-07:00" }}" itemprop="startDate" content="{{ .Date.Format "2006-01-02T15:04:05-07:00" }}">
+        {{ .Date.Format "Monday, 2 January 2006" }}{{ if not (.Date.Format "15:04" | eq "00:00") }} · {{ .Date.Format "3:04 pm" }}{{ end }}
+      </time>
+      {{- if $past }} <span class="event-past-tag">This programme has passed</span>{{ end }}
+    </p>
+
+    <h1 class="post-title" itemprop="name">{{ .Title }}</h1>
+
+    {{- with .Params.artists }}
+    <p class="event-artists">{{ delimit . ", " }}</p>
+    {{- end }}
+
+    {{- with .Params.poster }}
+    {{- with $.Resources.GetMatch . | default (resources.Get .) }}
+    {{- with .Resize (printf "1200x %s" ($.Site.Params.image_options | default "webp q90 lanczos photo")) }}
+    <img class="event-poster" src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="" itemprop="image">
+    {{- end }}
+    {{- end }}
+    {{- end }}
+
+    <section class="post-content" itemprop="description">
+      {{ .Content }}
+    </section>
+
+    <footer class="event-footer">
+      {{- with .Params.entry }}<p class="event-entry">Entry: {{ . }}</p>{{ end }}
+      <p class="event-venue" itemprop="location" itemscope itemtype="https://schema.org/Place">
+        <span itemprop="name">{{ .Site.Title }}</span>,
+        <span itemprop="address">5/6, Thirumalai Pillai Road, Satyamurthy Nagar, T. Nagar, Chennai 600017</span>
+      </p>
+      {{- if not $past }}
+      <p class="event-cta">
+        <a href="mailto:hello@lilaartscentre.com?subject={{ printf "Enquiry: %s" .Title | urlquery }}">Enquire about this programme</a>
+      </p>
+      {{- end }}
+    </footer>
+  </article>
+</main>
+{{ end }}

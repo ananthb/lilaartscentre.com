@@ -80,3 +80,49 @@ collections:
       - { name: weight, label: Order, widget: number, value_type: int, min: 1 }
       - { name: header_menu, label: Show in the nav menu, widget: boolean, required: false, default: true }
       - { name: body, label: Body, widget: markdown }
+
+  # Programmes. Dated pages under content/events/, rendered by
+  # layouts/events/ — a real Hugo section, not part of the one-page scroll.
+  - name: events
+    label: Events
+    label_singular: Programme
+    folder: content/events
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: yaml-frontmatter
+    # Same trick as the sections collection above: the branch index
+    # (content/events/_index.md) is not a programme and must not be editable
+    # as one. It carries no `kind`, so filtering on kind: programme hides it.
+    filter: { field: kind, value: programme }
+    sortable_fields:
+      fields: [date, title]
+      default: { field: date, direction: descending }
+    summary: "{{date | date('yyyy-MM-dd')}} — {{title}}"
+    fields:
+      - { name: kind, widget: hidden, default: programme }
+      - { name: title, label: Title, widget: string }
+      # Date AND time: the time shows on the listing and drives the .ics feed.
+      # Leave the time at midnight for an all-day or time-to-be-confirmed entry
+      # and the listing simply omits it.
+      - name: date
+        label: Date and time
+        widget: datetime
+        date_format: yyyy-MM-dd
+        time_format: HH:mm
+        picker_utc: false
+      - { name: summary, label: One-line summary, widget: string, required: false }
+      - name: artists
+        label: Artists
+        widget: list
+        required: false
+        field: { name: name, label: Name, widget: string }
+      - name: entry
+        label: Entry
+        widget: select
+        required: false
+        options: ["Free", "Tickets", "By invitation", "Registration"]
+      - { name: poster, label: Poster, widget: image, required: false }
+      # Announce later: a draft never reaches the built site.
+      - { name: draft, label: Draft, widget: boolean, required: false, default: false }
+      - { name: body, label: Full description, widget: markdown, required: false }

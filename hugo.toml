@@ -1,16 +1,42 @@
 baseURL = 'https://lilaartscentre.com/'
-languageCode = 'en-in'
+locale = 'en-in'
 title = 'Lila Arts Centre'
+
+# Every root-level key must sit above the first [table]. These used to live
+# below [module], which parsed them as module.disableKinds and friends, so
+# Hugo never saw them: taxonomy pages and an RSS feed were built regardless.
+
+# Mostly a one-page website, but /events/ is a real section with dated pages,
+# so `section` and `RSS` stay enabled. Taxonomies have no templates.
+disableKinds = ["taxonomy", "term", "robotsTXT"]
+
+# Programmes are announced ahead of time; future-dated pages must still build.
+buildFuture = true
+
+# Was silently inert under [module] and the site never showed it; leaving it
+# on would newly print "version: <date> | #<sha>" in the footer.
+enableGitInfo = false
+enableEmoji = true
 
 [module]
 [[module.imports]]
 path = "github.com/zjedi/hugo-scroll"
 
-# One-page website, disable unnecessary page types
-disableKinds = ["section", "taxonomy", "term", "RSS", "robotsTXT"]
+# The homepage stays a single scrolling page; only /events/ carries a feed
+# and a calendar subscription.
+[outputs]
+home = ["html"]
+section = ["html", "rss", "calendar"]
+page = ["html"]
 
-enableGitInfo = true
-enableEmoji = true
+[outputFormats.calendar]
+mediaType = "text/calendar"
+baseName = "events"
+isPlainText = true
+protocol = "webcal://"
+
+[permalinks]
+events = "/events/:year/:slug/"
 
 [markup]
 [markup.goldmark]
