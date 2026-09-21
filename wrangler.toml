@@ -1,3 +1,16 @@
+# Cloudflare Pages reads this for the git-connected build.
+# GO_VERSION must satisfy the `go` line in go.mod, which Hugo keeps at the
+# local toolchain's version; Cloudflare's default Go is older (1.24.3).
+# HUGO_VERSION is pinned too: the image default is 0.147.7, well behind what
+# the flake builds with locally.
 name = "lilaartscentre-com"
 pages_build_output_dir = "public"
 compatibility_date = "2025-07-31"
+
+[env.production.vars]
+HUGO_VERSION = "0.165.0"
+GO_VERSION = "1.25.14"
+
+[env.preview.vars]
+HUGO_VERSION = "0.165.0"
+GO_VERSION = "1.25.14"
