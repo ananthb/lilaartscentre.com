@@ -1,3 +1,12 @@
+{{- /*
+  Hugo's internal opengraph template turns site.Params.images into absolute
+  URLs, so og:image points at /images/<file> whatever we do. Now that the
+  originals live in assets/, calling RelPermalink on each one is what
+  publishes it to exactly that path — without this the social card 404s.
+*/ -}}
+{{- range site.Params.images -}}
+  {{- with resources.Get . }}{{ $_ := .RelPermalink }}{{ end -}}
+{{- end -}}
 <style>
 :root {
   --cover-text-color: #1A1A1A;

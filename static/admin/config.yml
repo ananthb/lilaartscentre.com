@@ -15,10 +15,13 @@ backend:
 site_url: https://lilaartscentre.com
 display_url: https://lilaartscentre.com
 
-# hugo-scroll reads images from static/, and front matter refers to them as
-# images/<file> with no leading slash.
-media_folder: static/images
-public_folder: images
+# Images live in assets/ so Hugo actually processes them: anything in static/
+# is copied byte-for-byte and never resized. Front matter still refers to them
+# as images/<file> with no leading slash, which is what resources.Get wants;
+# the markdown render hook strips the leading slash public_folder adds, so
+# both spellings resolve to the same asset.
+media_folder: assets/images
+public_folder: /images
 
 # Photos are resized on the way in, so phone originals never reach the repo.
 media_libraries:

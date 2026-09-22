@@ -1,0 +1,48 @@
+{{- /*
+  Images written in markdown as /images/foo.jpg resolve out of assets/ and get
+  a real WebP srcset, rather than being copied byte-for-byte out of static/.
+  The CMS writes to assets/images and inserts /images/<file>, so an editor
+  uploading a phone photo still gets responsive output with no extra step.
+
+  Anything we cannot resolve — an external URL, a missing file — falls through
+  to a plain <img> so the page still renders.
+*/ -}}
+{{- $src := .Destination -}}
+{{- $alt := .PlainText | default .Title -}}
+{{- $img := "" -}}
+
+{{- if not (urls.Parse $src).Scheme -}}
+  {{- $path := strings.TrimPrefix "/" $src -}}
+  {{- /* A page bundle's own resource wins over the shared assets directory. */ -}}
+  {{- with .Page.Resources.GetMatch $path -}}
+    {{- $img = . -}}
+  {{- else -}}
+    {{- with resources.Get $path -}}{{- $img = . -}}{{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- with $img -}}
+  {{- if eq .ResourceType "image" -}}
+    {{- $opts := site.Params.image_options | default "webp q90 lanczos photo" -}}
+    {{- $widths := slice 480 768 1200 1600 -}}
+    {{- $srcset := slice -}}
+    {{- range $w := $widths -}}
+      {{- if ge $img.Width $w -}}
+        {{- with $img.Resize (printf "%dx %s" $w $opts) -}}
+          {{- $srcset = $srcset | append (printf "%s %dw" .RelPermalink .Width) -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+    {{- /* Narrower than the smallest step: one rendition, no srcset. */ -}}
+    {{- $fallback := $img.Resize (printf "%dx %s" (int (math.Min $img.Width 1200)) $opts) -}}
+    <img src="{{ $fallback.RelPermalink }}"
+      {{- with $srcset }} srcset="{{ delimit . ", " }}" sizes="(max-width: 780px) 100vw, 780px"{{ end }}
+      width="{{ $fallback.Width }}" height="{{ $fallback.Height }}"
+      alt="{{ $alt }}"{{ with $.Title }} title="{{ . }}"{{ end }}
+      loading="lazy" decoding="async">
+  {{- else -}}
+    <img src="{{ .RelPermalink }}" alt="{{ $alt }}" loading="lazy" decoding="async">
+  {{- end -}}
+{{- else -}}
+  <img src="{{ $src }}" alt="{{ $alt }}"{{ with .Title }} title="{{ . }}"{{ end }} loading="lazy" decoding="async">
+{{- end -}}
