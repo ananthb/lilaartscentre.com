@@ -76,6 +76,12 @@ showFooterLinks = false
 keywords = "dance studio chennai, bharatanatyam classes, performance space chennai, lila arts centre, t nagar dance, indian classical dance, dance workshops chennai"
 
 [[params.contacts]]
+label = "WhatsApp"
+value = "+91 91766 62141"
+url = "https://wa.me/919176662141"
+icon = "fa-brands fa-whatsapp"
+
+[[params.contacts]]
 label = "Instagram"
 value = "@lilaartscentre"
 url = "https://instagram.com/lilaartscentre"
