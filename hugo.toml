@@ -59,7 +59,7 @@ unsafe = true
 
 [params]
 # Favicon
-favicon = "images/favicon.png"
+favicon = "images/favicon.svg"
 
 # Open Graph / Social sharing image
 images = ["images/salangai.jpg"]

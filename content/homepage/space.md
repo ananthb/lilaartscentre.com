@@ -6,8 +6,6 @@ header_menu: true
 
 Lila Arts Centre features a thoughtfully designed performance and practice space equipped for dance, music, theatre, and more.
 
-![Dance studio](/images/studio.jpg)
-
 ##### Performance Hall
 
 An intimate venue perfect for dance recitals, musical concerts, theatre productions, and cultural events. Carefully considered acoustics and lighting provide an ideal setting for performances that demand attention to detail.

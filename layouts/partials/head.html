@@ -18,8 +18,12 @@
 {{ end }}
 {{ end }}
 
+{{- /* An SVG mark stays crisp at every size; the PNG is for iOS home screens
+       and the handful of places SVG icons still are not taken. */ -}}
 {{ with resources.Get .Site.Params.favicon }}
-  <link rel="shortcut icon" href="{{ .RelPermalink }}" type="{{ .MediaType.Type }}" />{{ end }}
+  <link rel="icon" href="{{ .RelPermalink }}" type="{{ .MediaType.Type }}" />{{ end }}
+{{ with resources.Get "images/favicon-180.png" }}
+  <link rel="apple-touch-icon" href="{{ .RelPermalink }}" />{{ end }}
 
 {{ with or .Description .Site.Params.description | plainify }}
   <meta name="description" content="{{ . }}" />{{ end }}

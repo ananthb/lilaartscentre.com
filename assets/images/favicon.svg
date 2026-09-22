@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Lila Arts Centre">
+  <title>Lila Arts Centre</title>
+  <!-- Alta ground, so the mark sits in the same dark as the site. -->
+  <rect width="64" height="64" rx="12" fill="#171210"/>
+  <!-- A serifed L in brass: the display face is an old-style serif, and the
+       brackets still read at 16px where finer detail would silt up. -->
+  <path fill="#C8A24A"
+        d="M19 14 H35 V19.5 H31 V44 H45 V39 H50 V50 H23 V19.5 H19 Z"/>
+</svg>
