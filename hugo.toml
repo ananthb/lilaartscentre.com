@@ -21,6 +21,20 @@ enableEmoji = true
 [module]
 [[module.imports]]
 path = "github.com/zjedi/hugo-scroll"
+# Declaring mounts replaces the module's defaults, which is the point: the
+# theme's static/ holds nothing but 4 MB of webfonts — Font Awesome plus Open
+# Sans, Oswald and Roboto Slab. The site uses system faces and inline SVG, so
+# none of it ships. layouts and assets are mounted explicitly to keep the rest
+# of the theme working.
+[[module.imports.mounts]]
+source = "layouts"
+target = "layouts"
+[[module.imports.mounts]]
+source = "assets"
+target = "assets"
+[[module.imports.mounts]]
+source = "i18n"
+target = "i18n"
 
 # The homepage stays a single scrolling page; only /events/ carries a feed
 # and a calendar subscription.
@@ -48,7 +62,7 @@ unsafe = true
 favicon = "images/favicon.png"
 
 # Open Graph / Social sharing image
-images = ["images/cover.jpg"]
+images = ["images/salangai.jpg"]
 
 # Site title for Open Graph
 title = "Lila Arts Centre - Dance Studio & Performance Space in Chennai"
@@ -79,22 +93,22 @@ keywords = "dance studio chennai, bharatanatyam classes, performance space chenn
 label = "WhatsApp"
 value = "+91 91766 62141"
 url = "https://wa.me/919176662141"
-icon = "fa-brands fa-whatsapp"
+icon = "whatsapp"
 
 [[params.contacts]]
 label = "Instagram"
 value = "@lilaartscentre"
 url = "https://instagram.com/lilaartscentre"
-icon = "fa-brands fa-instagram"
+icon = "instagram"
 
 [[params.contacts]]
 label = "Email"
 value = "hello@lilaartscentre.com"
 url = "mailto:hello@lilaartscentre.com"
-icon = "fa fa-envelope"
+icon = "envelope"
 
 [[params.contacts]]
 label = "Location"
 value = "T. Nagar, Chennai"
 url = "https://maps.google.com/?q=Lila+Arts+Centre+Chennai"
-icon = "fa fa-location-dot"
+icon = "location-dot"

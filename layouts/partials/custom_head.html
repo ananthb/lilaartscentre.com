@@ -8,152 +8,234 @@
   {{- with resources.Get . }}{{ $_ := .RelPermalink }}{{ end -}}
 {{- end -}}
 <style>
+/* ===================================================================
+   Alta — named for the red dye on a dancer's feet.
+
+   Dark-first, because dance is watched in a darkened hall: photographs
+   sit in it rather than on it. It also settles the old problem, which
+   was a warm cream ground fighting a cold blue-grey one — everything
+   here is warm, and the two section tones differ just enough to
+   separate without banding the page into stripes.
+
+   Contrast against the #171210 ground, measured:
+     bone  #EDE4D8  14.8:1
+     brass #C8A24A   7.7:1   links, dates, rules
+     muted #A39384   6.3:1   secondary text
+     alta  #C4402F   3.7:1   large text only, never body
+   =================================================================== */
 :root {
-  --cover-text-color: #1A1A1A;
-  --highlight: #C4A265;
-  --highlight-contrast: #1A1A1A;
-  --highlight-inverse: #1A1A1A;
-  --highlight-inverse-contrast: #C4A265;
-  --cover-title-and-description-guard-bg-color: rgba(245, 241, 235, 0.85);
-  --cover-title-text-shadow: rgba(0, 0, 0, 0.15) 0px 0px 10px;
-  --sticky-menu-text-color: #C4A265;
-  --section-light-text-color: #2C2C2C;
-  --section-light-bg-color: #F5F1EB;
-  --section-dark-text-color: #F5F1EB;
-  --section-dark-bg-color: #1E2328;
-  --section-uni-quote: #8A7D6B;
-  --section-uni-code-bg-color: #E8E3DA;
-  --single-page-text-color: #2C2C2C;
-  --single-page-bg-color: #F5F1EB;
-  --footer-color-background: #141618;
-  --footer-color: #9A8E7E;
+  --alta-ground: #171210;
+  --alta-raise: #1F1815;
+  --alta-bone: #EDE4D8;
+  --alta-brass: #C8A24A;
+  --alta-muted: #A39384;
+  --alta-red: #C4402F;
+  --alta-rule: #332722;
+  --alta-hover: #241C18;
 
-  /* The brand gold reads at 2.14:1 on the cream page background, well under
-     the 4.5:1 WCAG AA needs. This deeper gold keeps the character and lands
-     at 5.52:1, so it is what the events pages use for text and rules. */
-  --event-accent: #7A5C20;
-  --event-rule: #DED6C8;
-  --event-muted: #6A6257;
+  /* --- theme variables --- */
+  --cover-text-color: #F6EDE2;
+  --highlight: var(--alta-brass);
+  --highlight-contrast: var(--alta-ground);
+  --highlight-inverse: var(--alta-brass);
+  --highlight-inverse-contrast: var(--alta-ground);
+  --cover-title-and-description-guard-bg-color: transparent;
+  --cover-title-text-shadow: rgba(0, 0, 0, 0.55) 0 2px 18px;
+  --sticky-menu-text-color: var(--alta-brass);
+  --section-light-text-color: var(--alta-bone);
+  --section-light-bg-color: var(--alta-ground);
+  --section-dark-text-color: var(--alta-bone);
+  --section-dark-bg-color: var(--alta-raise);
+  --section-uni-quote: var(--alta-muted);
+  --section-uni-code-bg-color: #241C18;
+  --single-page-text-color: var(--alta-bone);
+  --single-page-bg-color: var(--alta-ground);
+  --footer-color-background: #0E0A09;
+  --footer-color: var(--alta-muted);
+
+  /* Two faces, both already on the reader's machine. Old-style serifs for
+     display — Georgia everywhere, Iowan and Palatino where they exist. */
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-/* ---- /events/ ------------------------------------------------------- */
+body { font-family: var(--font-body); background: var(--alta-ground); }
 
-.events {
-  list-style: none;
-  margin: 1.5rem 0 2.5rem;
-  padding: 0;
+h1, h2, h3, h4, h5, h6,
+.blog-title, .post-title { font-family: var(--font-display); font-weight: 400; }
+
+/* The theme sets 5rem with -1px tracking, which was drawn for a condensed
+   sans. An old-style serif at that size wants air, not compression. */
+.blog-title {
+  font-size: clamp(2.6rem, 8vw, 4.6rem);
+  letter-spacing: 0.01em;
+  line-height: 1.04;
+}
+.blog-description { font-family: var(--font-body); font-weight: 400; }
+
+.post-title { letter-spacing: 0.01em; }
+.post-content h5 {
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+  color: var(--alta-brass);
+  margin-bottom: 0.3rem;
 }
 
-.event + .event { border-top: 1px solid var(--event-rule); }
+/* --- hero ------------------------------------------------------------- */
+/* The photograph is bright at the edges; the title needs its own ground. */
+#site-head { position: relative; }
+#site-head.withCenteredImage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    rgba(12, 8, 7, 0.93) 6%,
+    rgba(12, 8, 7, 0.62) 52%,
+    rgba(12, 8, 7, 0.28) 100%
+  );
+}
+#site-head > .vertical { position: relative; }
+
+/* --- icons ------------------------------------------------------------ */
+/* Inline SVG now, sized on the current font. */
+.icon { vertical-align: -0.14em; flex: none; }
+.site-footer .icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  padding: 0.35rem;
+}
+
+/* The theme still writes <i class="fa …"> in three places we do not
+   override. With Font Awesome gone they are empty boxes, so they carry a
+   character of their own instead. */
+#header-arrow i::before { content: "\2193"; font-style: normal; }
+#back-to-main-page i::before { content: "\2039"; font-style: normal; padding-right: 0.15em; }
+.site-menu i::before { content: "\2197"; font-style: normal; font-size: 0.85em; }
+
+/* Bullets were a Font Awesome glyph via --ul-li-icon. */
+.post-content ul { list-style: none; padding-left: 1.25em; }
+.post-content ul > li { position: relative; }
+.post-content ul > li::before {
+  content: "";
+  position: absolute;
+  left: -1em;
+  top: 0.62em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--alta-brass);
+}
+
+hr { border: 0; border-top: 1px solid var(--alta-rule); }
+
+/* ---- /events/ -------------------------------------------------------- */
+
+.events { list-style: none; margin: 1.5rem 0 2.5rem; padding: 0; }
+.events > li::before { content: none; }
+
+.event + .event { border-top: 1px solid var(--alta-rule); }
 
 .event__link {
   display: grid;
   grid-template-columns: 3.75rem 1fr auto;
   gap: 1rem;
   align-items: baseline;
-  padding: 1rem 0.25rem;
+  padding: 1rem 0.5rem;
+  margin: 0 -0.5rem;
   text-decoration: none;
   color: inherit;
-  border-radius: 4px;
+  border-radius: 3px;
 }
-
 .event__link:hover,
-.event__link:focus-visible { background: #EFE9DE; }
+.event__link:focus-visible { background: var(--alta-hover); }
 
 .event__date {
   display: flex;
   flex-direction: column;
   align-items: center;
   line-height: 1.1;
-  color: var(--event-accent);
+  color: var(--alta-brass);
   padding-top: 0.15rem;
+  font-family: var(--font-display);
 }
-
-.event__date b { font-size: 1.6rem; font-weight: 700; }
-.event__date span { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; }
-.event__date small { font-size: 0.7rem; opacity: 0.75; }
+.event__date b { font-size: 1.7rem; font-weight: 400; }
+.event__date span { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; }
+.event__date small { font-size: .68rem; opacity: .7; }
 
 .event__body { display: flex; flex-direction: column; gap: 0.2rem; }
-
 .event__title {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  /* Underline only the title, so the whole row stays a calm click target. */
   text-decoration: underline;
-  text-decoration-color: var(--event-rule);
+  text-decoration-color: var(--alta-rule);
   text-underline-offset: 3px;
 }
-
-.event__link:hover .event__title { text-decoration-color: var(--event-accent); }
-.event__meta, .event__summary { font-size: 0.9rem; color: var(--event-muted); }
+.event__link:hover .event__title { text-decoration-color: var(--alta-brass); }
+.event__meta, .event__summary { font-size: .88rem; color: var(--alta-muted); }
 
 .event__entry {
   align-self: center;
   white-space: nowrap;
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
+  font-size: .72rem;
+  letter-spacing: .08em;
   text-transform: uppercase;
-  padding: 0.3rem 0.6rem;
-  border: 1px solid var(--event-rule);
+  padding: 0.3rem 0.65rem;
+  border: 1px solid var(--alta-rule);
   border-radius: 999px;
-  color: var(--event-muted);
+  color: var(--alta-muted);
 }
-
-.event__entry--free { border-color: var(--event-accent); color: var(--event-accent); }
+.event__entry--free { border-color: var(--alta-brass); color: var(--alta-brass); }
 
 .events--past .event__date,
-.events--past .event__title { opacity: 0.78; }
+.events--past .event__title { opacity: .8; }
 
 .events-heading {
   margin-top: 2.5rem;
   padding-bottom: 0.4rem;
-  border-bottom: 2px solid var(--event-accent);
+  border-bottom: 1px solid var(--alta-brass);
 }
-
 .events-year {
   margin: 1.75rem 0 0;
-  font-size: 1rem;
-  letter-spacing: 0.1em;
+  font-family: var(--font-body);
+  font-size: .8rem;
+  letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--event-muted);
+  color: var(--alta-muted);
 }
+.events-empty, .events-subscribe { font-size: .93rem; color: var(--alta-muted); }
+.events-subscribe a, .events-empty a, .events-more a { color: var(--alta-brass); font-weight: 600; }
+.events-subscribe a { display: inline-flex; align-items: center; gap: .4em; }
 
-.events-empty, .events-subscribe { font-size: 0.95rem; color: var(--event-muted); }
-.events-more a { color: var(--event-accent); font-weight: 600; }
-.events-subscribe a, .events-empty a { color: var(--event-accent); }
-
-/* ---- a single programme --------------------------------------------- */
+/* ---- a single programme ---------------------------------------------- */
 
 .event-when {
   margin-bottom: 0.25rem;
-  font-size: 0.95rem;
-  letter-spacing: 0.04em;
+  font-size: .82rem;
+  letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--event-accent);
+  color: var(--alta-brass);
 }
-
 .event-past-tag {
-  text-transform: none;
-  letter-spacing: 0;
-  color: var(--event-muted);
-  font-style: italic;
+  text-transform: none; letter-spacing: 0;
+  color: var(--alta-muted); font-style: italic;
 }
-
-.event-artists { margin-top: 0; color: var(--event-muted); font-size: 1.05rem; }
-.event-presenter { margin-top: 0; color: var(--event-muted); font-size: 0.95rem; font-style: italic; }
-.event-poster { display: block; width: 100%; height: auto; margin: 1.5rem 0; border-radius: 4px; }
+.event-artists { margin-top: 0; color: var(--alta-bone); font-size: 1.05rem; }
+.event-presenter { margin-top: 0; color: var(--alta-muted); font-size: .95rem; font-style: italic; }
+.event-poster { display: block; width: 100%; height: auto; margin: 1.5rem 0; border-radius: 3px; }
 
 .event-footer {
   margin-top: 2rem;
   padding-top: 1rem;
-  border-top: 1px solid var(--event-rule);
-  font-size: 0.95rem;
+  border-top: 1px solid var(--alta-rule);
+  font-size: .93rem;
 }
-
 .event-footer p { margin: 0.35rem 0; }
 .event-entry { font-weight: 600; }
-.event-venue { color: var(--event-muted); }
-.event-cta a { color: var(--event-accent); font-weight: 600; }
+.event-venue { color: var(--alta-muted); }
+.event-cta a { color: var(--alta-brass); font-weight: 600; }
 
 @media (max-width: 480px) {
   .event__link { grid-template-columns: 3rem 1fr; row-gap: 0.5rem; }

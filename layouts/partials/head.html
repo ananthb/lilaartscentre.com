@@ -1,0 +1,45 @@
+{{- /*
+  The theme's head, minus two things: the three Font Awesome stylesheets and
+  css/fonts.css. Both pointed at the theme's static/webfonts, which is no
+  longer mounted (see hugo.toml) — 4 MB of Font Awesome, Open Sans, Oswald and
+  Roboto Slab for four icons and two faces we now get from the system.
+
+  Everything else is the theme's, kept in step deliberately: if hugo-scroll
+  changes its head, this file has to be re-reconciled.
+*/ -}}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+{{ if and site.Params.combine_page_and_site_title .Title .Site.Title }}
+<title>{{ .Title | plainify }} | {{ .Site.Title | plainify }}</title>
+{{ else }}
+{{ with or .Title .Site.Title | plainify }}
+<title>{{ . }}</title>
+{{ end }}
+{{ end }}
+
+{{ with resources.Get .Site.Params.favicon }}
+  <link rel="shortcut icon" href="{{ .RelPermalink }}" type="{{ .MediaType.Type }}" />{{ end }}
+
+{{ with or .Description .Site.Params.description | plainify }}
+  <meta name="description" content="{{ . }}" />{{ end }}
+{{ with or (delimit .Keywords ", ") .Site.Params.meta.keywords }}
+  <meta name="keywords" content="{{ . }}" />{{ end }}
+<meta name="referrer" content="no-referrer-when-downgrade" />
+
+<meta name="HandheldFriendly" content="True" />
+<meta name="MobileOptimized" content="320" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+{{ $stylesheetNormalize := resources.Get "css/normalize.css" }}
+{{ $stylesheetGeneric := resources.Get "css/generic.css" }}
+{{ $stylesheetScreen := ( resources.Get "css/_index.scss" | css.Sass ) }}
+
+{{ $stylesheet := slice $stylesheetNormalize $stylesheetGeneric $stylesheetScreen | resources.Concat "css/style.css" | resources.Minify | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $stylesheet.RelPermalink }}" type="text/css" integrity="{{ $stylesheet.Data.Integrity }}" />
+
+{{ template "_internal/opengraph.html" . }}
+{{ template "_internal/twitter_cards.html" . }}
+{{ template "_internal/schema.html" . }}
+
+{{- partial "custom_head.html" . -}}

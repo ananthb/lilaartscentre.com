@@ -1,5 +1,5 @@
 ---
-header_image: "images/cover.jpg"
+header_image: "images/salangai.jpg"
 header_use_video: false
 header_headline: "Lila Arts Centre"
 header_subheadline: "A performance space and dance studio in the heart of <b>Chennai</b>"
