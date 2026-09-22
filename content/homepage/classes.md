@@ -4,24 +4,28 @@ weight: 3
 header_menu: true
 ---
 
-We offer classes for students of all ages and skill levels, taught by experienced practitioners passionate about sharing their art.
-
-![Performance](/images/performance.jpg)
+We teach three disciplines, to students of all ages and levels of experience.
+Beginners are welcome in every one of them.
 
 ##### Bharatanatyam
 
-Our flagship programme in this ancient classical dance form of Tamil Nadu. From foundational adavus to advanced choreography, we guide students through a comprehensive curriculum - beginners through to arangetram preparation.
+The classical dance form of Tamil Nadu, taught from foundational adavus
+through to advanced repertoire. Available **both in person and online**.
 
-##### Movement & Contemporary
+##### Kalaripayattu
 
-Explore contemporary dance forms and movement practices that complement traditional training.
+Kerala's martial art, and one of the oldest in the world — conditioning,
+sequences and weapons work. **In person only.**
 
-##### Summer Intensives
+##### Carnatic Vocal
 
-Special workshops and intensive programmes during school holidays for immersive learning experiences.
+Classical vocal music in the Carnatic tradition.
 
 ----
 
-*Classes available both in-person and online.*
+Workshops and intensives run alongside the regular classes through the year;
+they are announced on [Instagram](https://instagram.com/lilaartscentre) and
+listed under [Events](/events/).
 
-[Sign up for classes](https://docs.google.com/forms/d/e/1FAIpQLSc9WKup_-6BT4-n5qqDes_B1F6s0MVsBok8GSy6Ehoc6NvrzQ/viewform)
+[Register for Bharatanatyam or Kalaripayattu](https://forms.gle/JjhC6bwVHjXzDZEQ8) —
+for Carnatic vocal, [message us on WhatsApp](https://wa.me/919176662141?text=Hi%2C%20I%27d%20like%20to%20ask%20about%20Carnatic%20vocal%20classes).

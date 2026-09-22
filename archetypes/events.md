@@ -5,6 +5,7 @@ draft: true
 kind: programme
 artists: []
 venue: ""
+presenter: ""
 entry: "Free"
 summary: ""
 ---

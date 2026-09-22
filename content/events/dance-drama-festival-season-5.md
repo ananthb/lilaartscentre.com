@@ -1,8 +1,9 @@
 ---
-title: "Bharatanatyam Recital — Dance Drama Festival, Season 5"
+title: "Bharatanatyam Recital"
 date: 2026-08-02T16:30:00+05:30
 kind: programme
 venue: "Egmore Museum Theatre"
+presenter: "Dance Drama Festival, Season 5"
 artists:
   - "Abhinaya V"
   - "Tulsi S"

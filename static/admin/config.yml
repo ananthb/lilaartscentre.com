@@ -114,6 +114,8 @@ collections:
       # Only when the programme is not on our own stage; left blank the site
       # uses the centre's own name and address.
       - { name: venue, label: Venue (if elsewhere), widget: string, required: false }
+      # A festival, sabha or series running the programme, when it is not ours.
+      - { name: presenter, label: Presented by (if not us), widget: string, required: false }
       - { name: summary, label: One-line summary, widget: string, required: false }
       - name: artists
         label: Artists

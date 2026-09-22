@@ -19,6 +19,11 @@
     <p class="event-artists">{{ delimit . ", " }}</p>
     {{- end }}
 
+    {{- /* Programmes run by an outside body — a festival, a sabha, a series. */ -}}
+    {{- with .Params.presenter }}
+    <p class="event-presenter">Presented by {{ . }}</p>
+    {{- end }}
+
     {{- with .Params.poster }}
     {{- with $.Resources.GetMatch . | default (resources.Get .) }}
     {{- with .Resize (printf "1200x %s" ($.Site.Params.image_options | default "webp q90 lanczos photo")) }}

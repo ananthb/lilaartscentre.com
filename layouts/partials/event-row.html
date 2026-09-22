@@ -14,6 +14,7 @@
           {{- $bits = $bits | append (.Date.Format "3:04 pm") -}}
         {{- end -}}
         {{- with .Params.artists }}{{ $bits = $bits | append (delimit . ", ") }}{{ end -}}
+        {{- with .Params.presenter }}{{ $bits = $bits | append . }}{{ end -}}
         {{- /* Only named when it is not our own stage. */ -}}
         {{- with .Params.venue }}{{ $bits = $bits | append . }}{{ end -}}
         {{- delimit $bits " · " -}}
