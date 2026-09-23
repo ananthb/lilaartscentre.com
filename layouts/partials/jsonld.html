@@ -1,0 +1,84 @@
+{{- /*
+  Structured data. The site had none, which for a physical venue in Chennai is
+  the single biggest thing standing between it and a map pin or an event card.
+
+  Two shapes, one address:
+    - the home page describes the venue once, at a stable @id
+    - each programme describes an Event that points back at that @id
+
+  Everything comes from params.venue or the page's own front matter; nothing
+  is invented. A programme held elsewhere names its own Place instead.
+*/ -}}
+{{- $v := site.Params.venue -}}
+{{- $venueID := printf "%s#venue" site.BaseURL -}}
+
+{{- $address := dict
+      "@type" "PostalAddress"
+      "streetAddress" $v.streetAddress
+      "addressLocality" $v.addressLocality
+      "addressRegion" $v.addressRegion
+      "postalCode" $v.postalCode
+      "addressCountry" $v.addressCountry -}}
+
+{{- if .IsHome -}}
+  {{- $img := "" -}}
+  {{- with index site.Params.images 0 }}{{ with resources.Get . }}{{ $img = .Permalink }}{{ end }}{{ end -}}
+  {{- $venue := dict
+        "@context" "https://schema.org"
+        "@type" "PerformingArtsTheatre"
+        "@id" $venueID
+        "name" site.Title
+        "description" site.Params.description
+        "url" site.BaseURL
+        "address" $address -}}
+  {{- with $v.legalName }}{{ $venue = merge $venue (dict "legalName" .) }}{{ end -}}
+  {{- with $v.telephone }}{{ $venue = merge $venue (dict "telephone" .) }}{{ end -}}
+  {{- with $v.email }}{{ $venue = merge $venue (dict "email" .) }}{{ end -}}
+  {{- with $v.sameAs }}{{ $venue = merge $venue (dict "sameAs" .) }}{{ end -}}
+  {{- with $img }}{{ $venue = merge $venue (dict "image" .) }}{{ end -}}
+  {{- with $v.founder }}{{ $venue = merge $venue (dict "founder" (dict "@type" "Person" "name" .)) }}{{ end -}}
+<script type="application/ld+json">{{ $venue | jsonify | safeJS }}</script>
+{{- end -}}
+
+{{- if eq .Type "events" -}}
+{{- if eq .Kind "page" -}}
+  {{- /* Held on our own stage unless the programme names another. */ -}}
+  {{- $place := dict "@type" "Place" "name" site.Title "address" $address -}}
+  {{- with .Params.venue -}}
+    {{- $place = dict "@type" "Place" "name" . -}}
+  {{- end -}}
+
+  {{- $event := dict
+        "@context" "https://schema.org"
+        "@type" "Event"
+        "name" .Title
+        "startDate" (.Date.Format "2006-01-02T15:04:05-07:00")
+        "eventStatus" "https://schema.org/EventScheduled"
+        "eventAttendanceMode" "https://schema.org/OfflineEventAttendanceMode"
+        "url" .Permalink
+        "location" $place -}}
+
+  {{- $desc := or .Params.summary (.Summary | plainify | chomp) -}}
+  {{- with $desc }}{{ $event = merge $event (dict "description" .) }}{{ end -}}
+
+  {{- with .Params.artists -}}
+    {{- $performers := slice -}}
+    {{- range . }}{{ $performers = $performers | append (dict "@type" "Person" "name" .) }}{{ end -}}
+    {{- $event = merge $event (dict "performer" $performers) -}}
+  {{- end -}}
+
+  {{- /* Someone else's programme on our stage: they organise, we host. */ -}}
+  {{- with .Params.presenter -}}
+    {{- $event = merge $event (dict "organizer" (dict "@type" "Organization" "name" .)) -}}
+  {{- else -}}
+    {{- $event = merge $event (dict "organizer" (dict "@id" $venueID)) -}}
+  {{- end -}}
+
+  {{- with .Params.poster -}}
+    {{- with resources.Get (strings.TrimPrefix "/" .) -}}
+      {{- $event = merge $event (dict "image" .Permalink) -}}
+    {{- end -}}
+  {{- end -}}
+<script type="application/ld+json">{{ $event | jsonify | safeJS }}</script>
+{{- end -}}
+{{- end -}}

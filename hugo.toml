@@ -8,10 +8,13 @@ title = 'Lila Arts Centre'
 
 # Mostly a one-page website, but /events/ is a real section with dated pages,
 # so `section` and `RSS` stay enabled. Taxonomies have no templates.
-disableKinds = ["taxonomy", "term", "robotsTXT"]
+disableKinds = ["taxonomy", "term"]
 
 # Programmes are announced ahead of time; future-dated pages must still build.
 buildFuture = true
+
+# Removing robotsTXT from disableKinds is not enough; Hugo needs this too.
+enableRobotsTXT = true
 
 # Was silently inert under [module] and the site never showed it; leaving it
 # on would newly print "version: <date> | #<sha>" in the footer.
@@ -88,6 +91,26 @@ showFooterLinks = false
 
 [params.meta]
 keywords = "dance studio chennai, bharatanatyam classes, performance space chennai, lila arts centre, t nagar dance, indian classical dance, dance workshops chennai"
+
+# The venue as search engines and maps read it. Feeds the JSON-LD in
+# layouts/partials/jsonld.html, and every programme page reuses the address
+# so a listing and its venue never drift apart.
+# No geo coordinates and no opening hours here on purpose: both would have to
+# be invented, and a wrong pin on a map is worse than no pin.
+[params.venue]
+legalName = "Lila Arts Centre"
+telephone = "+919176662141"
+email = "hello@lilaartscentre.com"
+streetAddress = "5/6, Thirumalai Pillai Road, Satyamurthy Nagar, T. Nagar"
+addressLocality = "Chennai"
+addressRegion = "Tamil Nadu"
+postalCode = "600017"
+addressCountry = "IN"
+founder = "Anu Bhaskararaman"
+sameAs = [
+  "https://instagram.com/lilaartscentre",
+  "https://www.facebook.com/lilaartscentre/",
+]
 
 [[params.contacts]]
 label = "WhatsApp"

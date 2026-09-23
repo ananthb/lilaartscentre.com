@@ -46,4 +46,6 @@
 {{ template "_internal/twitter_cards.html" . }}
 {{ template "_internal/schema.html" . }}
 
+{{- partial "jsonld.html" . -}}
+
 {{- partial "custom_head.html" . -}}
