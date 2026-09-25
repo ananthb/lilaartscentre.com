@@ -30,16 +30,26 @@
   --alta-brass: #C8A24A;
   --alta-muted: #A39384;
   --alta-red: #C4402F;
-  --alta-rule: #332722;
+  /* Was #332722, which measured 1.29:1 on the ground — a hairline nobody
+     could see, doing real work separating one programme from the next.
+     #5B4838 is 2.15:1: visible as a rule without becoming a hard line. */
+  --alta-rule: #5B4838;
   --alta-hover: #241C18;
+  /* Hero text sits on a photograph with pure white pixels in it, so the
+     panel behind it has to do the work rather than a wash over the image.
+     0.86 over white worst-case measures 11.5:1. */
+  --alta-guard: rgba(15, 10, 9, 0.86);
 
   /* --- theme variables --- */
   --cover-text-color: #F6EDE2;
   --highlight: var(--alta-brass);
   --highlight-contrast: var(--alta-ground);
-  --highlight-inverse: var(--alta-brass);
+  /* The inverse pair is the :hover state. Setting it to the same brass meant
+     the nav buttons did not change at all on hover — a lighter brass keeps
+     dark text on it at 9.6:1 and actually reads as a response. */
+  --highlight-inverse: #DCB65E;
   --highlight-inverse-contrast: var(--alta-ground);
-  --cover-title-and-description-guard-bg-color: transparent;
+  --cover-title-and-description-guard-bg-color: var(--alta-guard);
   --cover-title-text-shadow: rgba(0, 0, 0, 0.55) 0 2px 18px;
   --sticky-menu-text-color: var(--alta-brass);
   --section-light-text-color: var(--alta-bone);
@@ -82,20 +92,62 @@ h1, h2, h3, h4, h5, h6,
 }
 
 /* --- hero ------------------------------------------------------------- */
-/* The photograph is bright at the edges; the title needs its own ground. */
+/* The first pass put a left-to-right gradient here, which was wrong twice
+   over: the theme centres this text (display:table + text-align:center), so
+   the tail of every line sat in the thin end of the wash, and the photograph
+   contains pure white pixels, where 0.28 alpha measured 1.67:1.
+
+   A wash alone cannot fix that without flattening the picture, so the wash
+   now only sets mood and the panel below carries legibility. That also means
+   any photograph can be dropped in later without re-checking contrast. */
 #site-head { position: relative; }
 #site-head.withCenteredImage::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    100deg,
-    rgba(12, 8, 7, 0.93) 6%,
-    rgba(12, 8, 7, 0.62) 52%,
-    rgba(12, 8, 7, 0.28) 100%
+  background: radial-gradient(
+    120% 90% at 50% 45%,
+    rgba(12, 8, 7, 0.34) 0%,
+    rgba(12, 8, 7, 0.58) 60%,
+    rgba(12, 8, 7, 0.78) 100%
   );
 }
 #site-head > .vertical { position: relative; }
+
+.title-and-description-guard {
+  display: inline-block;
+  max-width: 22ch;
+  margin: 0 auto;
+  padding: 1.6rem 2.2rem 1.9rem;
+  background: var(--cover-title-and-description-guard-bg-color);
+  border-radius: 3px;
+  /* Where it is supported this lifts the panel off the photo; where it is
+     not, the 0.86 alpha already carries the contrast on its own. */
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+.title-and-description-guard .blog-title { margin-top: 0; }
+.title-and-description-guard .blog-description { margin-bottom: 0; }
+
+/* Outside the panel and over bare photograph, so it carries its own ground. */
+#header-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  background: rgba(12, 8, 7, 0.72);
+  color: var(--alta-bone);
+}
+
+/* The theme ships no visible keyboard focus state. */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--alta-brass);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
 
 /* --- icons ------------------------------------------------------------ */
 /* Inline SVG now, sized on the current font. */

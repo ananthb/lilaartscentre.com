@@ -61,6 +61,11 @@ events = "/events/:year/:slug/"
 unsafe = true
 
 [params]
+# Wraps the hero title and subtitle in a panel, so their legibility comes
+# from a known background rather than from whatever the photograph happens
+# to be doing behind them.
+title_guard = true
+
 # Favicon
 favicon = "images/favicon.svg"
 
